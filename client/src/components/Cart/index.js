@@ -21,7 +21,7 @@ const Cart = () => {
    const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
 
    const dispatch = useDispatch();
-   const { cart, cartOpen } = useSelector( state => state.shop );
+   const state = useSelector( state => state );
 
    useEffect(() => {
        async function getCart() {
@@ -29,10 +29,10 @@ const Cart = () => {
            dispatch({ type: ADD_MULTIPLE_TO_CART, products: [...cart]});
        };
 
-       if(!cart.length) {
+       if(!state.cart.length) {
            getCart();
        }
-   }, [cart.length, dispatch]);
+   }, [state.cart.length, dispatch]);
 
    // stripe useEffect hook
    useEffect(() => {
@@ -49,7 +49,7 @@ const Cart = () => {
 
    function calculateTotal() {
        let sum = 0;
-       cart.forEach(item => {
+       state.cart.forEach(item => {
            sum += item.price * item.purchaseQuantity;
        });
        return sum.toFixed(2);
@@ -58,7 +58,7 @@ const Cart = () => {
    function submitCheckout() {
        const productIds = [];
 
-       cart.forEach((item) => {
+       state.cart.forEach((item) => {
            for (let i = 0; i < item.purchaseQuantity; i++) {
                productIds.push(item._id);
            }
@@ -85,9 +85,9 @@ const Cart = () => {
     <div className="cart">
       <div className="close" onClick={toggleCart}>[close]</div>
       <h2>Shopping Cart</h2>
-      {cart.length ? (
+      {state.cart.length ? (
       <div>
-          {cart.map(item => (
+          {state.cart.map(item => (
           <CartItem key={item._id} item={item} />
           ))}
           <div className="flex-row space-between">

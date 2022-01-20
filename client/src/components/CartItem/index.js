@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 const CartItem = ({ item }) => {
   // const [, dispatch] = useStoreContext();
 
-  // declaring constant for dispatch function
+  // declaring constant for dispatch function (redux)
   const dispatch = useDispatch();
 
   const removeFromCart = item => {

@@ -13,13 +13,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function CategoryMenu() {
   // const [state, dispatch] = useStoreContext();
-
-  // const { categories } = state;
+  
+  const state = useSelector( state => state );
+  const dispatch = useDispatch();
+  const { categories } = state;
 
   const { loading, data: categoryData } = useQuery(QUERY_CATEGORIES);
   
-  const dispatch = useDispatch();
-  const { categories } = useSelector(state => state.shop);
+  
 
   useEffect(() => {
     if (categoryData) {

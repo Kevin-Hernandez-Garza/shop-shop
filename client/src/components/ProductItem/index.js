@@ -13,8 +13,10 @@ import { useDispatch, useSelector } from 'react-redux';
 function ProductItem(item) {
   // const [state, dispatch] = useStoreContext();
 
-  const { cart } = useSelector(state => state.shop);
   const dispatch = useDispatch();
+  const state = useSelector(state => state);
+
+  const { cart } = state;
 
   const addToCart = () => {
     // find the cart item with the matching id
@@ -27,10 +29,10 @@ function ProductItem(item) {
         _id: _id, 
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
       });
-      idbPromise('cart', 'put', {
-        ...itemInCart,
-        purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
-      });
+      // idbPromise('cart', 'put', {
+      //   ...itemInCart,
+      //   purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1
+      // });
     } else {
       dispatch({
         type: ADD_TO_CART,
