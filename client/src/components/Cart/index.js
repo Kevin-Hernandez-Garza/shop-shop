@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import CartItem from '../CartItem';
 import Auth from '../../utils/auth';
 import './style.css';
-import { useStoreContext } from '../../utils/GlobalState';
+// import { useStoreContext } from '../../utils/GlobalState';
 import { TOGGLE_CART, ADD_MULTIPLE_TO_CART } from '../../utils/actions';
 import { idbPromise } from '../../utils/helpers';
 // importing modules
@@ -10,13 +10,18 @@ import { QUERY_CHECKOUT } from '../../utils/queries';
 import { loadStripe } from '@stripe/stripe-js';
 // hook: it executes only when you tell it to
 import { useLazyQuery } from '@apollo/client';
+// redux hooks: To access the dispatch function & hook to access Redux store state
+import { useDispatch, useSelector } from 'react-redux';
 
 const stripePromise = loadStripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
 
 const Cart = () => {
-   const [state, dispatch] = useStoreContext();
-   
+   // const [state, dispatch] = useStoreContext();
+
    const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);
+
+   const dispatch = useDispatch();
+   const state = useSelector( state => state );
 
    useEffect(() => {
        async function getCart() {
@@ -74,7 +79,7 @@ const Cart = () => {
        );
    }
 
-   console.log(state);
+   // console.log(state);
 
   return (
     <div className="cart">
